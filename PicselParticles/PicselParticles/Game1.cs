@@ -66,7 +66,7 @@ namespace PicselParticles
 
         protected override void Initialize()
         {
-            BallInitalize(6,1200000,0.1f);
+            BallInitalize(10,12000000,0.02f);
             BufferInitalize();
             base.Initialize();
         }            
@@ -186,6 +186,14 @@ namespace PicselParticles
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 rotationMatrix *= Matrix.CreateRotationX(MathHelper.ToRadians(1));
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                rotationMatrix *= Matrix.CreateRotationZ(-1 * MathHelper.ToRadians(1));
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                rotationMatrix *= Matrix.CreateRotationZ(MathHelper.ToRadians(1));
             }
 
             // Check for input to zoom camera in and out.
