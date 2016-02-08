@@ -19,7 +19,7 @@ namespace PicselParticles
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         BasicEffect effect;
-
+        
         Matrix projectionMatrix;
         Matrix viewMatrix;
         Matrix worldMatrix;
@@ -38,6 +38,9 @@ namespace PicselParticles
         #endregion
         List<Piramida> piramida;
         Piramida p;
+        private double t;
+        private int c;
+        private string s;
 
         public Game1()
         {
@@ -49,7 +52,8 @@ namespace PicselParticles
             graphics.PreferredBackBufferWidth = 800;
             Window.Title = "Kezumie";
             IsMouseVisible = true;
-            piramida = new List<Piramida>();
+            piramida = new List<Piramida>();       
+            
             viewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, 10), Vector3.Zero, Vector3.Up);
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
                  graphics.PreferredBackBufferWidth /
@@ -62,9 +66,9 @@ namespace PicselParticles
         protected override void Initialize()
         {
            
-            BallInitalize(10,12,1f);
+            BallInitalize(10,1200000,0.1f);
             BufferInitalize();
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 10; i++)
             {
                 p = null;
                 p = new Piramida(this, graphics);
@@ -94,6 +98,14 @@ namespace PicselParticles
 
         protected override void Draw(GameTime gameTime)
         {
+            ++c;
+            t += gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (c > 100)
+            {
+                s += " " + c + " " + t + Environment.NewLine;
+                c = 0;
+                t = 0;
+            }
             graphics.GraphicsDevice.Clear(Color.Black);
             graphics.GraphicsDevice.BlendState = BlendState.Opaque;
             graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
