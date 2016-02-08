@@ -37,6 +37,7 @@ namespace PicselParticles
 
         #endregion
         List<Piramida> piramida;
+        Piramida p;
 
         public Game1()
         {
@@ -54,26 +55,28 @@ namespace PicselParticles
                  graphics.PreferredBackBufferWidth /
                 (float)graphics.PreferredBackBufferHeight,
                 1.5f, 100);
-            worldMatrix = Matrix.CreateWorld(new Vector3(0f, 0f, 0f), new Vector3(0, 0, -1), Vector3.Up);
-            for (int i = 0; i < 10; i++)
-            {
-                Piramida p = new Piramida(this,graphics);                
-                piramida.Add(p);
-                Components.Add(p);
-            }
-            
+            worldMatrix = Matrix.CreateWorld(new Vector3(0f, 0f, 0f), new Vector3(0, 0, -1), Vector3.Up);       
           
         }
 
         protected override void Initialize()
         {
-            BallInitalize(10,120000,0.1f);
+           
+            BallInitalize(10,12,1f);
             BufferInitalize();
+            for (int i = 0; i < 10000; i++)
+            {
+                p = null;
+                p = new Piramida(this, graphics);
+                piramida.Add(p);
+                Components.Add(p);
+            }
             base.Initialize();
         }            
 
         protected override void LoadContent()
         {
+           
             effect = new BasicEffect(graphics.GraphicsDevice);           
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);           
         }

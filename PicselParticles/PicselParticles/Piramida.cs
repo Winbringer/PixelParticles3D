@@ -20,9 +20,9 @@ namespace PicselParticles
         public Piramida(Game game, GraphicsDeviceManager gm):base(game) 
         {
 
-            graphics = gm;
+            graphics = gm;            
             Color = Color.Orange;
-            Size = 1f;
+            Size = 0.1f;
             vertex = new VertexPositionColor[12];
             ViewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, 50), Vector3.Zero, Vector3.Up);
             ProjectMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
