@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using System;
 
 namespace PicselParticles
 {
@@ -17,19 +17,24 @@ namespace PicselParticles
         public float Size { get; set; }
         #endregion
 
-        public Piramida(Game game):base(game) 
+        public Piramida(Game game, GraphicsDeviceManager gm):base(game) 
         {
 
-           
+            graphics = gm;
             Color = Color.Orange;
-            Size = 2f;
+            Size = 1f;
             vertex = new VertexPositionColor[12];
             ViewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, 50), Vector3.Zero, Vector3.Up);
             ProjectMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
                 (float)game.Window.ClientBounds.Width /
                 (float)game.Window.ClientBounds.Height,
                 1.5f, 100);
-            WorldMatrix = Matrix.CreateWorld(new Vector3(0f, 0f, 0f), new Vector3(0, 0, -1), Vector3.Up);
+            Random rndd = new Random(DateTime.Now.Millisecond);
+            Random rnd = new Random(DateTime.Now.Millisecond+rndd.Next());
+            float x = (float)(rnd.NextDouble() - rnd.NextDouble()) * 10;
+            float y = (float)(rnd.NextDouble() - rnd.NextDouble()) * 10;
+            float z = (float)(rnd.NextDouble() - rnd.NextDouble()) * 10;
+            WorldMatrix =Matrix.CreateTranslation(x,y,z)* Matrix.CreateWorld(new Vector3(0f, 0f, 0f), new Vector3(0, 0, -1), Vector3.Up);
 
         }
 
@@ -76,7 +81,7 @@ namespace PicselParticles
 
         public override void Update(GameTime gameTime)
         {
-           
+            WorldMatrix *= Matrix.CreateTranslation(0.01f, 0, 0); ;
             base.Update(gameTime);
         }
 

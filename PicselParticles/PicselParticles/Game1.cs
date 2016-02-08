@@ -55,18 +55,19 @@ namespace PicselParticles
                 (float)graphics.PreferredBackBufferHeight,
                 1.5f, 100);
             worldMatrix = Matrix.CreateWorld(new Vector3(0f, 0f, 0f), new Vector3(0, 0, -1), Vector3.Up);
-
-            Piramida p = new Piramida(this);
-            p.graphics = graphics;
-            piramida.Add(p);
-            Components.Clear();
-            Components.Add(p);
+            for (int i = 0; i < 10; i++)
+            {
+                Piramida p = new Piramida(this,graphics);                
+                piramida.Add(p);
+                Components.Add(p);
+            }
+            
           
         }
 
         protected override void Initialize()
         {
-            BallInitalize(10,12000000,0.02f);
+            BallInitalize(10,120000,0.1f);
             BufferInitalize();
             base.Initialize();
         }            
@@ -108,7 +109,7 @@ namespace PicselParticles
                 pass.Apply();                                         
                 graphics.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, v.Length, 0, PiramidaIndices.Length / 3);
             }
-            graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+           
             base.Draw(gameTime);
         }
 
@@ -171,11 +172,11 @@ namespace PicselParticles
         void UpdateMatrix()
         {
 
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 rotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(1));
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 rotationMatrix *= Matrix.CreateRotationY(-1 * MathHelper.ToRadians(1));
             }
@@ -217,7 +218,7 @@ namespace PicselParticles
 
             viewMatrix = rotationMatrix * Matrix.CreateLookAt(new Vector3(0, 0, cameraDistance),
                                               new Vector3(0, 0, 0), Vector3.Up);
-            foreach (var p in piramida)
+            foreach (var p in piramida )
             {
                 p.ViewMatrix = viewMatrix;
             }
@@ -254,9 +255,9 @@ namespace PicselParticles
                 Color c3 = Color.Orange;
                 Color c4 = Color.Orange;
                 Random rnd = new Random(i);
-                double R = rnd.NextDouble() * radius; //rnd.NextDouble()* 10;
+                double R = radius; //rnd.NextDouble() * radius; 
                 float sin = (float)(rnd.NextDouble() * 180);
-                float cos = (float)(rnd.NextDouble() * 360);
+                float cos = (float)(rnd.NextDouble() * 180);
                 float x = (float)(R * Math.Sin(MathHelper.ToRadians(sin)) * Math.Cos(MathHelper.ToRadians(cos)));
                 float y = (float)(R * Math.Sin(MathHelper.ToRadians(sin)) * Math.Sin(MathHelper.ToRadians(cos)));
                 float z = (float)(R * Math.Cos(MathHelper.ToRadians(sin)));
